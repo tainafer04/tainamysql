@@ -1,0 +1,59 @@
+-- ======================================
+-- CRIAÇÃO DO BANCO DE DADOS
+-- ======================================
+CREATE DATABASE IF NOT EXISTS LojaJogos;
+USE LojaJogos;
+
+-- ======================================
+-- TABELA CLIENTE (Jogadores)
+-- ======================================
+CREATE TABLE Cliente (
+    id_cliente INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    email VARCHAR(100),
+    telefone VARCHAR(15)
+);
+
+-- ======================================
+-- TABELA PRODUTO (Jogos)
+-- ======================================
+CREATE TABLE Jogo (
+    id_jogo INT AUTO_INCREMENT PRIMARY KEY,
+    titulo VARCHAR(100) NOT NULL,
+    descricao TEXT,
+    preco DECIMAL(10,2) NOT NULL,
+    estoque INT NOT NULL,
+    plataforma ENUM('PC', 'PlayStation', 'Xbox', 'Nintendo Switch', 'Mobile') NOT NULL,
+    genero ENUM('Ação', 'Aventura', 'RPG', 'Esporte', 'Simulação', 'Estratégia') NOT NULL
+);
+
+-- ======================================
+-- TABELA PEDIDO (Compras)
+-- ======================================
+CREATE TABLE Pedido (
+    id_pedido INT AUTO_INCREMENT PRIMARY KEY,
+    id_cliente INT NOT NULL,
+    data_pedido DATE NOT NULL,
+    status ENUM('Pendente', 'Concluído', 'Cancelado') DEFAULT 'Pendente',
+    FOREIGN KEY (id_cliente) REFERENCES Cliente(id_cliente)
+);
+
+-- ======================================
+-- TABELA ITEM_PEDIDO
+-- ======================================
+CREATE TABLE ItemPedido (
+    id_item INT AUTO_INCREMENT PRIMARY KEY,
+    id_pedido INT NOT NULL,
+    id_jogo INT NOT NULL,
+    quantidade INT NOT NULL,
+    preco_unitario DECIMAL(10,2) NOT NULL,
+    FOREIGN KEY (id_pedido) REFERENCES Pedido(id_pedido),
+    FOREIGN KEY (id_jogo) REFERENCES Jogo(id_jogo)
+);
+
+-- ======================================
+-- INSERÇÃO DE DADOS
+-- ======================================
+
+-- CLIENTES
+INSERT IN  
